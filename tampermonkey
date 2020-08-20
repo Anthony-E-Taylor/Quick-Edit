@@ -1,0 +1,84 @@
+// ==UserScript==
+// @name         myCopyTables
+// @namespace    http://localhost:8206/quick-edit.html?copyclipboard=y
+// @version      2.2
+// @description  Copy text from MYSQLX files
+// @author       Talawah Systems Inc.
+// @match        http://localhost:8206/*mysqlx*
+// @match        chrome-extension://ekdpkppgmlalfkphpibadldikjimijon/popup.html
+// @grant        none
+// ==/UserScript==
+
+// Timestamp: 2020-06-09 10:49:06
+
+var h3 = null;
+
+//-----------------------------------------------------------------------------
+// Append css to the <style> tag inside the <head> tag
+function addGlobalStyle(css) {
+	var head, style;
+	head = document.getElementsByTagName('head')[0];
+	if (!head) {
+		return;
+	}
+	style = document.createElement('style');
+	style.type = 'text/css';
+	style.innerHTML = css;
+	head.appendChild(style);
+}
+
+$("body").prepend('<div class ="header" id="header" style="padding-bottom: 1%; color: black; display: block; position: fixed; top:0; width:100%; "><br/> &nbsp;  &nbsp; <div style="float:right; width: 40px;"><img title="HELP - Shortcut Keys" id="help" class="help" src="https://shots.jotform.com/kade/Screenshots/blue_question_mark.png" alt="????" width="20" height="20" style="  cursor: pointer; float:left;  ;"/> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  <div/></div>');
+
+
+// -----------------------------------------------------------------------------
+// Invokes copying to clipboard with shortcut keys
+
+document.onkeydown = function (invokeCopyToClipboard) {
+    if (invokeCopyToClipboard.which == 83 && invokeCopyToClipboard.altKey) { //  Alt + S => Invokes copyping to clipboard
+		invokeCopyToClipboard.ctrlKey == false;
+		invokeCopyToClipboard.shiftKey == false;
+		invokeCopyToClipboard.altKey == false;
+		var tbl = [];
+		var tblNum = 0;
+
+        // Assign CSS to Navigation Bar
+		h3 = $("h3").html();
+		$("body").prepend("<br/><br/><br/><br/>");
+		$("h3").hide();
+		addGlobalStyle('.header { background-color: #D8CCBE; }');
+
+        // Prepend Navigation Bar <div> to <body> of HTML page
+		(function () {
+			'use strict';
+			if (window.location.href.includes("mysqlx")) {
+				$("body").prepend('<div class ="header" id="header" style="padding-bottom: 1%; color: black; display: block; position: fixed; top:0; width:100%; "><br/> &nbsp;  &nbsp; <b>' + h3 + '<b/><div style="float:right; width: 40px;"><img title="HELP - Shortcut Keys" id="help" class="help" src="https://shots.jotform.com/kade/Screenshots/blue_question_mark.png" alt="????" width="20" height="20" style="  cursor: pointer; float:left;  ;"/> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  <div/></div>');
+				$("div[id*='table']").find("td").attr("id", "text");
+				$("td").css('cursor', 'pointer');
+			}
+
+//-----------------------------------------------------------------------------
+// Paste text from clipboard to QuickEdit.html
+
+			function pasteToQuickEdit() {
+				var data = $("td[ data-copytables-selected = '1' ]");   //  CopyTables' attribute selector
+				data.each(function () {
+                    gsText += this.innerHTML + '\n';                    //  Concatenate innerHTML of each highlighted table cell
+				});
+
+				navigator.clipboard.writeText( gsText ).then( function () {
+					window.open('http://localhost:8206/quick-edit.html?copyclipboard=y', "_blank");   // Open Quick-Edit in new browser tab & paste text from clipboard
+					gsText = "";
+				});
+			}
+//-----------------------------------------------------------------------------
+// Hotkeys to open Quick-Edit.html?clipboard=Y in new browser tab & paste text from clipboard
+
+            document.onkeyup = function (e) {
+				if (e.altKey && e.which == 13)   // ALT  +  ENTER
+					pasteToQuickEdit();
+			}
+		})();
+	}
+
+
+}
