@@ -1,0 +1,927 @@
+﻿<!doctype html>
+
+<html lang="en">
+<head>
+
+   <meta charset="utf-8">
+   <title>Sort | Append | Remove </title>
+   <meta name="Sort, append, and remove text" content="text">
+   <meta name="TalawahSystemsInc" content="SitePoint">
+
+   <style>
+      h0 {
+         width: 0 px;
+         line-height: 0 px;
+      }
+
+      h1 {
+         width: 0 px;
+         line-height: 0 px;
+      }
+
+      h2 {
+           margin-left: 3vh;
+         width: 0 px;
+         line-height: 0 px;
+      }
+
+      h3 {
+         width: 00 px;
+         line-height: px;
+         background-color:;
+      }
+
+      header {
+         display: inline;
+      }
+
+      body {
+         width:;
+         line-height:;
+         background-color:;
+         position: relative
+      }
+
+      textarea {
+         width: 96%;
+         line-height:;
+         background-color:;
+         position: relative;
+      }
+
+      #page-container {
+         position: relative;
+         min-height: 83vh;
+      }
+
+      #content-wrap {
+         padding-bottom: 2.5rem; /* Footer height */
+      }
+
+      #footer {
+         position: absolute;
+         bottom: 0;
+         width: 100%;
+         height: 2.5rem; /* Footer height */
+      }
+
+      #help {
+         position: relative;
+         padding-left: 95%;
+         cursor: pointer;
+      } 
+      
+      #refresh {
+         position: absolute;
+         cursor: pointer;
+         padding-left: 20%;
+         line-height: 8px
+      }
+ 
+.copybtn {
+  margin-right: -100vh;
+
+}
+ 
+.alpha {
+  display: flex;
+  flex-wrap: nowrap;
+  padding-left:30%;
+    align-items: center;
+
+}
+
+.alpha>div {
+  width: 60%;
+  text-align:right;
+  line-height: 35px;
+}
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.flex-container>div {
+  width: 60%;
+  text-align:right;
+  line-height: 35px;
+}
+      #testmode {
+         position: relative;
+         bottom: 0;
+         padding-left: 48%;
+      }
+
+      button {
+         color: blue;
+         font-weight: bold;
+         cursor: pointer;
+      }
+
+      th {
+         border-spacing: 40px;
+         border-collapse: separate;
+      }
+
+      tr {
+         margin: 0
+      }
+
+      .onoffswitch {
+         position: relative;
+         width: 60px;
+         -webkit-user-select: none;
+         -moz-user-select: none;
+         -ms-user-select: none;
+      }
+
+      .onoffswitch-checkbox {
+         display: none;
+      }
+
+      .onoffswitch-label {
+         display: block;
+         overflow: hidden;
+         cursor: pointer;
+         border: 2px solid #999999;
+         border-radius: 33px;
+      }
+
+      .onoffswitch-inner {
+         display: block;
+         width: 200%;
+         margin-left: -100%;
+         transition: margin 0.3s ease-in 0s;
+      }
+
+         .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 15px;
+            padding: 0;
+            line-height: 18px;
+            font-size: 13px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+         }
+
+         .onoffswitch-inner:before {
+            content: "TEST";
+            padding-left: 5px;
+            background-color: #0000FF;
+            color: #FFFFFF;
+            text-align: left;
+         }
+
+         .onoffswitch-inner:after {
+            content: "MODE";
+            padding-right: 2px;
+            background-color: #EEEEEE;
+            color: #999999;
+            text-align: right;
+         }
+
+      .onoffswitch-switch {
+         display: block;
+         width: 12px;
+         margin: 1.5px;
+         background: #FFFFFF;
+         position: absolute;
+         top: 0;
+         bottom: 0;
+         right: 42px;
+         border: 2px solid #999999;
+         border-radius: 29px;
+         transition: all 0.3s ease-in 0s;
+      }
+
+      .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+         margin-left: 0;
+      }
+
+      .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+         right: 0px;
+      }
+
+
+      .column {
+         position: sticky;
+         bottom: 0;
+         width: 100%;
+         height: 3.5rem
+      }
+
+         .column div {
+            position: relative;
+            float: right;
+            width: 30px;
+            height: 0px;
+            margin: 0 0 0 0;
+            padding-right: 2%;
+         }
+
+            .column div:first-child {
+               margin-left: 0;
+            }
+
+            .column div:last-child {
+               margin-right: 0px;
+            }
+
+            .column div span {
+               position: center;
+               bottom: -20px;
+               left: 0;
+               z-index: -1;
+               display: block;
+               width: 30px;
+               margin: 0;
+               padding: 0;
+               color: #444;
+               font-size: 18px;
+               text-decoration: none;
+               text-align: center;
+               -webkit-transition: .3s ease-in-out;
+               transition: .3s ease-in-out;
+               opacity: 0;
+            }
+
+      figure.help {
+         width: 300px;
+         height: 200px;
+         margin: 0;
+         padding: 0;
+         background: #fff;
+      }
+
+         figure:hover + span {
+            bottom: -36px;
+            opacity: 1;
+         }
+
+      /* Zoom In #1 */
+      .hover01 figure img {
+         -webkit-transform: scale(1);
+         transform: scale(1);
+         -webkit-transition: .25s ease-in-out;
+         transition: .15s ease-in-out;
+      }
+
+      .hover01 figure:hover img {
+         -webkit-transform: scale(1.1);
+         transform: scale(1.1);
+      }
+   </style>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+   <script>
+      var gTestMode;
+      $(function () {
+         $(document).ready(function () {
+            $('#TestMode').click(function () {
+
+               if (this.checked = true) {
+                  gTestMode = true;
+               }
+
+            });
+         });
+      });
+
+      HTMLDocument.prototype.iD = document.getElementById
+   </script>
+   <script>
+      var buttons = ["Append.IV", "Join-Comma", "Join-Space", "Remove non-Symbols", "Sort", "Sort|Append.IV", "Copy"];
+      var functions = [function () { appendText('.IV', '\n', ['XL', 'SMH', 'SOXX'], false); },
+      function () { joinComma(/\s/g); },
+      function () { joinSpace(/\s/g); },
+      function () { removeText(/[^A-Z ]/gi, ','); },
+      function () { sortText('\n'); },
+      function () { appendText('.IV', '\n', ['XL', 'SMH', 'SOXX'], true); },
+      function () { copyText(); clearSelection(); setFocusTextArea1(); }];
+      var map = new Map();
+      var help = "";
+      var testOutput = function () { };
+      var bTestOutput = false;
+
+
+      //-----------------------------------------------------------------------------
+      function buttonFunction(test, testOutput) {
+
+         for (var i = 0; i < buttons.length; i++) {
+            map.set(buttons[i], functions[i]);
+
+            if (test == buttons[i]) {
+               if (gTestMode) {
+                  alert("Function: " + map.get(buttons[i]));
+               }//buttons[i]);
+               return map.get(buttons[i]);
+            }
+         }
+      }
+
+
+      //-----------------------------------------------------------------------------
+      // Automatically paste clipboard into InpUT textarea if quick-edit.html?copyclipboard=Y
+
+      if (window.location.search == "?copyclipboard=Y" || window.location.search == "?copyclipboard=y") {
+         navigator.clipboard.readText()
+            .then(text => {
+               textArea1.value = text;
+               while ($(textArea1).outerHeight() < textArea1.scrollHeight + parseFloat($(textArea1).css("borderTopWidth")) + parseFloat($(textArea1).css("borderBottomWidth"))) {
+                  $(textArea1).height($(textArea1).height() + 1);
+               };
+               console.log(window.location.search);
+
+               console.log('Pasted content: ', text);
+            })
+            .catch(err => {
+               console.error('Failed to read clipboard contents: ', err);
+            });
+      }
+      else if ((window.location.search).includes("Test")) {
+         navigator.clipboard.writeText(window.location.search.substring(1));
+         navigator.clipboard.readText()
+            .then(text => {
+               var vars = text.replace(/\+/gi, " ").replace(/[, ]+/g, " ").trim().split('&');
+               //alert(vars);
+               for (var i = 0; i < vars.length; i++) {
+                  var pair = vars[i].split('=');
+                  if (decodeURIComponent(pair[0]) == "title") {
+                     document.title = decodeURIComponent(pair[1]);
+                     document.getElementById("quick-edit").innerHTML += " - " + decodeURIComponent(pair[1]);
+                  }
+
+                  if (decodeURIComponent(pair[0]) == "input") {
+                     var input = decodeURIComponent(pair[1]);
+                     textArea1.value = input;
+                  }
+
+                  if (decodeURIComponent(pair[0]) == "button") {
+                     testOutput = buttonFunction(decodeURIComponent(pair[1]));
+                     bTestOutput = true;
+                  }
+
+               }
+               while ($(textArea1).outerHeight() < textArea1.scrollHeight + parseFloat($(textArea1).css("borderTopWidth")) + parseFloat($(textArea1).css("borderBottomWidth"))) {
+                  $(textArea1).height($(textArea1).height() + 1);
+
+               };
+
+               console.log(window.location.search);
+
+               console.log('Pasted content: ', text);
+            })
+            .catch(err => {
+               console.error('Failed to read clipboard contents: ', err);
+            });
+      }
+      else {
+         navigator.clipboard.readText()
+            .then(text => {
+               console.log(window.location.search);
+
+               console.log('Pasted content: ', text);
+            })
+            .catch(err => {
+               console.error('Failed to read clipboard contents: ', err);
+            });
+      }
+
+      //-----------------------------------------------------------------------------
+      // Keyboard shortcuts
+
+      document.onkeyup = function (e) {
+         if (e.ctrlKey && e.altKey && e.which == 32) {
+            if (gTestMode) myAlert('Spacebar', "JOIN-SPACE");
+            joinSpace("");
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 188) {
+            if (gTestMode) myAlert('Comma', "JOIN-COMMA");
+            joinComma("");
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 65) {
+            if (gTestMode) myAlert('A', "APPEND.IV");
+            appendText('.IV', '\n', ['XL', 'SMH', 'SOXX']);
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 67) {
+            if (gTestMode) myAlert('C', "Copy Button");
+            copyText();
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 82) {
+            if (gTestMode) myAlert('R', "REMOVE non-SYMBOLS");
+            removeText(/[^A-Z ]/gi, ',');
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 83) {
+            if (gTestMode) myAlert('S', "SORT");
+            sortText('\n');
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 86) {
+            if (gTestMode) myAlert('V', "SORT|APPEND.IV");
+            appendText('.IV', '\n', ['XL', 'SMH', 'SOXX'], true);
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 80) {
+            if (gTestMode) myAlert('P', "PASTE OUTPUT into INPUT textArea");
+            Paste();
+         }
+         else if (e.ctrlKey && e.altKey && e.which == 72) {
+            if (gTestMode) myAlert('H', "HELP");
+            helpShortcuts();
+         }
+      };
+
+
+      //-----------------------------------------------------------------------------
+      function helpShortcuts() {
+
+         var ctrlAlt = "Ctrl + Alt + ";
+         var keys = ["       A      ", "       C      ", "       H      ", "       P      ", "       R      ", "       S      ", "       V      ", "  Comma ", " Spacebar"];
+         var vals = ["APPEND.IV", "Copy Button", "HELP", "PIPE OUTPUT > INPUT textArea", "REMOVE non-SYMBOLS", "SORT", "SORT|APPEND.IV", "JOIN-COMMA", "JOIN-SPACE"];
+         var map = new Map();
+         var help = "";
+
+         for (var i = 0; i < keys.length; i++)      map.set(keys[i], vals[i]);
+         for (var key of map.keys()) help += ctrlAlt + key + "    =>     " + map.get(key) + '\n';
+         alert(help);
+      }
+      //-----------------------------------------------------------------------------
+
+      function myAlert(key, shortcut) {
+         alert("Ctrl + Alt + " + key + ": " + shortcut + "  Shortcut");
+      }
+
+               var title = null;
+               var tID = null;
+      //-----------------------------------------------------------------------------
+      $(function () {
+         //  changes mouse cursor when highlighting lower right of box
+         $(document).ready().on('focus', 'textarea', function (e) {
+            var a = $(this).offset().top + $(this).outerHeight() - 16,	//	top border of bottom-right-corner-box area
+               b = $(this).offset().left + $(this).outerWidth() - 16;	//	left border of bottom-right-corner-box area
+            $(this).css
+               ({
+                  cursor: e.pageY > a && e.pageX > b ? 'nw-resize' : ''
+               });
+         })
+
+         testOutput();
+
+         //  the following simple make the textbox "Auto-Expand" as it is typed in
+         /* .on('input', 'textarea', function(e) {
+              //  the following will help the text expand as typing takes place
+              while($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+                    $(this).height($(this).height()+1);
+              };
+             });*/
+
+         
+
+         $(document).ready().on('keyup', 'textarea', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(textArea1).outerHeight() < textArea1.scrollHeight + parseFloat($(textArea1).css("borderTopWidth")) + parseFloat($(textArea1).css("borderBottomWidth"))) {
+               $(textArea1).height($(textArea1).height() + 1);
+            };
+         });
+
+         $(document).ready().on('input', 'textarea', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(textArea1).outerHeight() < textArea1.scrollHeight + parseFloat($(textArea1).css("borderTopWidth")) + parseFloat($(textArea1).css("borderBottomWidth"))) {
+               $(textArea1).height($(textArea1).height() + 1);
+            };
+
+         });
+
+         $(document).ready().on('copy', 'textarea', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+               $(this).height($(this).height() + 1);
+            };
+         });
+         $(document).ready().on('keyup', 'textarea', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(textArea2).outerHeight() < $(textArea2).scrollHeight + parseFloat($(textArea2).css("borderTopWidth")) + parseFloat($(textArea2).css("borderBottomWidth"))) {
+               $(textArea2).height($(textArea2).height() + 1);
+            };
+         });
+
+         $(document).ready().on('change', 'textarea', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(textArea2).outerHeight() < this.scrollHeight + parseFloat($(textArea2).css("borderTopWidth")) + parseFloat($(textArea2).css("borderBottomWidth"))) {
+               $(textArea2).height($(textArea2).height() + 1);
+            };
+         });
+         $(document).ready().on('click', 'button', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(textArea2).outerHeight() < textArea2.scrollHeight + parseFloat($(textArea2).css("borderTopWidth")) + parseFloat($(textArea2).css("borderBottomWidth"))) {
+               $(textArea2).height($(textArea2).height() + 1);
+            };
+         });
+         $(document).ready().on('focusout', 'textarea', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(textArea2).outerHeight() < textArea2.scrollHeight + parseFloat($(textArea2).css("borderTopWidth")) + parseFloat($(textArea2).css("borderBottomWidth"))) {
+               $(textArea2).height($(textArea2).height() + 1);
+            };
+         });
+         if (bTestOutput === true) {
+          
+            setFocusTextArea2();
+         }
+         
+         $(document).ready().on('focus', 'textarea', function (e) {
+            //  the following will help the text expand as typing takes place
+            while ($(this).outerHeight() < this.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+               $(this).height($(this).height() + 1);
+            };
+         });
+
+      })
+
+      //-----------------------------------------------------------------------------
+      function appendText(appendage, delimiter, exceptions, sort) {
+         if (gTestMode) { alert("Appending " + appendage + delimiter + "Exceptions: " + exceptions.filter(value => exceptions.includes(value))); }
+         var myText = textArea1.value.trim();
+         var myArray = myText.split(",").toString().replace(/\n|\s/gi,',').split(',');
+         alert(myArray);
+         //var myArray = myText.split(delimiter);
+         var result = '';
+         var copyResult = '';
+
+         for (i = 0; i < myArray.length - 1; i++) {
+            if (myArray[i].includes(exceptions[0]) ||
+               myArray[i].includes(exceptions[1]) ||
+               myArray[i].includes(exceptions[2])) {
+               result += myArray[i] + delimiter;
+               //result += myArray.join( "\n" );
+            }
+            else {
+               result += myArray[i].trim() + appendage + delimiter;
+            }
+         }
+         for (i = myArray.length - 1; i < myArray.length; i++) {
+            if (myArray[i].includes(exceptions[0]) ||
+               myArray[i].includes(exceptions[1]) ||
+               myArray[i].includes(exceptions[2])) {
+               result += myArray[i].trim();
+            }
+            else {
+               result += myArray[i] + appendage;
+            }
+         }
+
+         var results = null;
+         if (sort === true) {
+
+            results = result.split('\n');
+            //    |JKL      |ABC |
+            for (i = 0; i < results.length - 1; i++)        //    |ABC      |DEF |
+               results[i] = results[i].trim();               //    |  GHI    |GHI |
+            //    |DEF      |JKL |
+            results.sort();
+            results.forEach(myFunction);
+
+            var x = "";
+            function myFunction(item) {
+               x += (item + "\n");
+               textArea2.value = x.replace("undefined", '').trim();
+            }
+
+
+         }
+         else
+            textArea2.value = result.trim();
+
+         var count = "Chars: " + myText.length + "   | Lines: " + myArray.length + "   |  Words: " + myArray.length;
+
+         inputCount.innerHTML = count;
+
+         var copyArray = result.split(delimiter);
+
+         for (i = 0; i < copyArray.length - 1; i++) {
+            copyResult += copyArray[i]
+         }
+         for (i = copyArray.length - 1; i < copyArray.length; i++) {
+            copyResult += copyArray[i];
+         }
+         var copyCount = "Chars : " + copyResult.trim().length + "   |  Lines: " + copyArray.length + "   |   Words : " + copyArray.length;
+
+         document.getElementById("copyCount").innerHTML = copyCount;
+
+         if (gTestMode) { console.log(".IV Appended to: \n" + document.getElementById("textArea2").value); }
+      }
+
+      //-----------------------------------------------------------------------------
+      function clearSelection() {
+         if (gTestMode) { console.log("Clearing Selections"); }
+         window.getSelection().removeAllRanges();
+      }
+
+      //-----------------------------------------------------------------------------
+      function clearTextAreas() {
+         if (gTestMode) { console.log("Clearing TextArea1 & TextArea2"); }
+         var oldTextArea1 = textArea1.value;
+         var oldTextArea2 = textArea2.value;
+         textArea1.value = '';
+         textArea2.value = '';
+         var count = "Chars: " + " | Lines:  |  Words: ";
+         document.getElementById("inputCount").innerHTML = count;
+         document.getElementById("copyCount").innerHTML = count;
+         if (gTestMode) { console.log("\nCleared TextArea1: " + oldTextArea1 + "\n\nTextArea2: " + oldTextArea2); }
+      }
+
+
+      //-----------------------------------------------------------------------------
+      function copyText() {
+         if (gTestMode) { console.log("Copying Text"); }
+         var copyText = textArea2;
+         copyText.select();
+         copyText.setSelectionRange(0, 99999)
+         document.execCommand("copy");
+         //textArea1.value = '';
+         if (gTestMode) { console.log("Copied the text:\n" + copyText.value); }
+      }
+
+      //------------------------------------------------------------------------------
+      function copyPaste() {
+         if (gTestMode) { console.log("Copying & Pasting Text"); }
+         var copyText = textArea2;
+         copyText.select();
+         copyText.setSelectionRange(0, 99999)
+         document.execCommand("copy");
+         textArea1.value = copyText.value;
+         if (gTestMode) { console.log("Copied & Pasted:\n" + copyText.value); }
+      }
+
+      //------------------------------------------------------------------------------
+      function Paste() {
+         if (gTestMode) { console.log("Pasting Text"); }
+         var copyText = textArea2;
+         textArea1.value = copyText.value;
+         if (gTestMode) { console.log("Pasted:\n" + copyText.value); }
+      }
+
+      //-----------------------------------------------------------------------------
+      function resizeTextArea(obj) {
+         while ($(this).outerHeight() < obj.scrollHeight + parseFloat($(this).css("borderTopWidth")) + parseFloat($(this).css("borderBottomWidth"))) {
+            $(this).height($(this).height() + 1);
+         }
+      }
+
+      //-----------------------------------------------------------------------------
+      function setFocusTextArea1() {
+
+         textArea1.focus()
+      }
+      //-----------------------------------------------------------------------------
+      function setFocusTextArea2() {
+
+         textArea2.focus()
+      }
+      //-----------------------------------------------------------------------------
+      function sortText(delimiter) {
+         if (gTestMode) { console.log("Sorting ETFs"); }
+         var myText = textArea1.value.trim();
+         var myArray = myText.split(delimiter);
+         //    JKL      |     ABC
+         for (i = 0; i < myArray.length - 1; i++)        //    ABC      |     DEF
+            myArray[i] = myArray[i].trim();               //      GHI    |     GHI
+         //    DEF      |     JKL
+         myArray.sort();
+
+         var result = '';
+         var copyResult = '';
+
+         for (i = 0; i < myArray.length - 1; i++) {
+            result += myArray[i] + '\n';
+         }
+         for (i = myArray.length - 1; i < myArray.length; i++) {
+            result += myArray[i];
+         }
+         document.getElementById("textArea2").value = result;
+
+         var count = "Chars: " + myText.length + "   | Lines: " + myArray.length + "  |  Words: " + myArray.length;
+
+         document.getElementById("inputCount").innerHTML = count;
+
+
+         var copyArray = result.split(delimiter);
+         for (i = 0; i < copyArray.length - 1; i++) {
+            copyResult += copyArray[i] + delimiter;
+         }
+         for (i = copyArray.length - 1; i < copyArray.length; i++) {
+            copyResult += copyArray[i];
+         }
+         var copyCount = "Chars : " + result.length + "   |  Lines: " + copyArray.length + "  |   Words : " + copyArray.length;
+
+         document.getElementById("copyCount").innerHTML = copyCount;
+         //resizeTextArea( gTextArea2 );
+         if (gTestMode) { console.log("Sorted ETFs:\n" + textArea2.value); }
+      }
+
+      //-----------------------------------------------------------------------------
+      function removeText(regex, delimiter) {
+         if (gTestMode) { console.log("Removing non-Symbols from ETFs"); }
+         var myText = textArea1.value.trim();//.replace( regex, '' );
+         var myLines = myText.split('\n'); //&& " ");
+         var result = "";
+         for (i = 0; i < myLines.length; i++) {
+            myLines[i] = myLines[i].replace(regex, '').trim().split(',');
+            result += (myLines[i].join(",") + ",$space,").split(" ").toString();
+            //result += myArray[i] + ",";
+         }
+
+         var symbols = myText.replace('\n', "").replace(regex, '').trim().split('\n' && " ").toString();
+         symbols = symbols.split('\n' && " ");//replace(regex, '').split( '\n' && " ");///    ( '\n' && " " )
+
+         var myArray = myText.replace(regex, '').split(delimiter);
+         //         var result = '';
+         //var myArray = removedText.split(",");
+         //var regexWords = /\s+/gi;
+         //var wordCount = myText.trim().replace(regexWords, ' ').split(' ').length;
+
+         for (i = 0; i < symbols.length; i++) {
+            //            result = symbols.join(",") + ",$space,";
+            //result += myArray[i] + ",";
+         }
+
+         textArea2.value = result.replace(/[, ]+/g, ",").trim();
+
+         var count = "Chars: " + myText.length + "   | Lines: " + myLines.length + "   |  Words: " + myArray.length;
+         document.getElementById("inputCount").innerHTML = count;
+
+         var copyLines = result.split('\n');
+         var copyArray = result.split(delimiter);
+         var copyCount = "Chars : " + result.length + "   |  Lines: " + copyLines.length + "  |  Words : " + copyArray.length;
+
+         for (i = 0; i < copyArray.length; i++) {
+            result = myArray.join(delimiter)
+         }
+
+         document.getElementById("copyCount").innerHTML = copyCount;
+
+         if (gTestMode) { console.log("ETFs Reduced to:\n" + document.getElementById("textArea2").value); }
+      }
+
+      //-----------------------------------------------------------------------------
+      //   * Enhancement: Need way to join multiple lines into one line, with a comma separator
+
+      function joinComma(delimiter) {
+         if (gTestMode) { alert("\nJoining: " + textArea1.value); }
+
+         var myText = textArea1.value.trim();
+
+         var newText = myText.replace(/[^\S\r\n]+$/gm, "").split("\n"); //Trim trailing spaces before newlines in multi-line string
+         for (i = 0; i < newText.length - 1; i++)
+            newText[i] = newText[i].trim();
+
+         if (delimiter == /\s/g) {
+            newText = newText.replace(',', " ");
+         }
+         else delimiter = ',';
+
+         textArea2.value = newText;
+         newString = newText.toString();
+         var copyLines = newString.split('\n');
+         var copyArray = newString.split(',');
+         var copyCount = "Chars : " + newString.length + "   |  Lines: " + copyLines.length + "  |  Words : " + copyArray.length;
+
+         if (gTestMode) {
+            console.log(textArea2.value + " ... joined by: " + delimiter);
+         }
+      }
+
+      //-----------------------------------------------------------------------------
+      //   * Enhancement: Need way to join multiple lines into one line, with a space separator
+
+      function joinSpace(delimiter) {
+         if (gTestMode) { alert("\nJoining: " + textArea1.value); }
+
+         var txt = "";
+         var myText = textArea1.value.trim();
+
+         var newText = myText.replace(/[^\S\r\n]+$/gm, "").split("\n"); //Trim trailing spaces before newlines in multi-line string
+         for (var i = 0; i < newText.length; i++) {
+            txt += newText[i].trim() + " ";
+         }
+         //str.split(' ').join('§ §').split('§');
+         //newText = newText.replace(",", " ");
+
+         textArea2.value = txt;// + "hello";
+         newString = newText.toString();
+         var copyLines = newString.split('\n');
+         var copyArray = newString.split(',');
+         var copyCount = "Chars : " + newString.length + "   |  Lines: " + copyLines.length + "  |  Words : " + copyArray.length;
+
+         if (gTestMode) {
+            console.log(textArea2.value + " ... joined by: " + delimiter);
+         }
+      }
+
+      //-----------------------------------------------------------------------------
+      //  Clear INPUT textarea  
+
+      function reload() {
+         textArea1.value = "";
+         textArea2.value = "";
+         setFocusTextArea1();
+
+         //this line is to watch the result in console , you can remove it later
+         console.log("Refreshed");
+      }
+
+
+/**/</script>
+
+</head>
+<body>
+   <h2 id="quick-edit" class="quick-edit">Quick Edits</h2>
+
+   <br />
+   <div id="page-container" align="center" valign="top">
+      <div id="content-wrap" align="center" valign="top">
+
+         <div class="alpha">
+            <button id="Append" onclick="appendText( '.IV', '\n' ,[ 'XL', 'SMH', 'SOXX' ], false)">Append.IV</button>  &nbsp; &nbsp;
+            <button id="Join-Comma" onclick="joinComma( /\s/g )">Join-Comma</button>  &nbsp; &nbsp;
+            <button id="Join-Space" onclick="joinSpace( /\s/g )">Join-Space</button>  &nbsp; &nbsp;
+            <!-- <button id="CopyPaste"      onclick="copyPaste(); clearSelection();">Copy | Paste</button>&nbsp; &nbsp;-->
+            <button id="RemoveText" onclick="removeText( /[^A-Z ]/gi , ',');">Remove non-Symbols</button>  &nbsp; &nbsp;
+         </div>
+         <div class="copybtn">
+            <button id="CopyText" onclick="copyText(); clearSelection(); setFocusTextArea1();">Copy</button><br />
+         </div>
+         <div class="alpha">
+            <button id="Sort|Append" onclick="appendText( '.IV' , '\n' ,[ 'XL', 'SMH', 'SOXX' ], true );">Sort | Append.IV</button>  &nbsp; &nbsp;
+            <button id="Sort|Join-Comma" onclick="sortText('\n'); Paste(); joinComma( /\s/g )">Sort | Join-Comma</button>  &nbsp; &nbsp;
+            <button id="Sort|Join-Space" onclick="sortText('\n'); Paste(); joinSpace( /\s/g )">Sort | Join-Space</button>  &nbsp; &nbsp;<!-- <button id="CopyText"       onclick="clearTextAreas(); clearSelection(); setFocusTextArea1();" >CLEAR</button>  &nbsp; &nbsp;-->
+            <button id="Sort" onclick="sortText( '\n' )">Sort</button>
+         </div>
+
+         <br />
+         <br />
+         <br />
+         <div>
+            <table border="3" style="width:0%" align="center">
+               <thead>
+                  <tr>
+                     <th align="center" height="40px">
+                        <div class="flex-container">
+                           <div class="hover01">
+                              <figure><img id="refresh" title="Refresh INPUT textarea" onclick="reload()" src="https://www.goodfreephotos.com/albums/vector-images/refresh-icon-vector-clipart.png" alt="????" width="20" height="20" /><b>INPUT</b></figure>
+                           </div>
+                        </div>
+                     </th>
+
+                     <th align="center" height="40px"><b>OUTPUT</b></th>
+                  </tr>
+               </thead>
+
+               <tr>
+                  <td align="center" valign="top">
+                     <pre><b><p id="inputCount">Chars: &nbsp; &nbsp; Lines: &nbsp; &nbsp; Words: </p></b></pre>
+                     <textarea id="textArea1" class='autoExpand' rows='1' cols='75%' placeholder='Sort | Append | Remove' name="Sort | Append | Remove" tabindex="1" autofocus></textarea>
+
+                  </td>
+
+                  <td align="center" valign="top">
+                     <pre><b><p id="copyCount">Chars: &nbsp; &nbsp; Lines: &nbsp; &nbsp; Words: </p></b></pre>
+                     <div> <textarea id="textArea2" class='autoExpand' rows='1' cols='75%' placeholder='Text to be copied' name="Remove non-Symbols"></textarea> </div>
+
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>
+      <footer id="footer" align="center">
+         <font size="2">
+            <script language="JavaScript" type="text/javascript">
+               document.write(Date());
+            </script>
+            <br>Talawah Systems Inc.
+         </font>
+      </footer>
+   </div>
+   <div id="testmode" class="onoffswitch" align="center" valign="center">
+      <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="TestMode">
+      <label class="onoffswitch-label" for="TestMode">
+         <span class="onoffswitch-inner"></span>
+         <span class="onoffswitch-switch"></span>
+      </label>
+   </div>
+   <header>
+      <a id="help" title="HELP - Shortcut Keys" onclick="helpShortcuts()">
+         <div class="column">
+            <div class="hover01 column">
+               <figure class="help"><img src="https://shots.jotform.com/kade/Screenshots/blue_question_mark.png" alt="????" width="20" height="20" /></figure>
+
+            </div>
+         </div>
+      </a>
+   </header>
+</body>
+</html>
+
+
